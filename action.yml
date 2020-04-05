@@ -1,0 +1,11 @@
+name: 'Compile LaTeX'
+description: 'Compile LaTeX using the Tectonic engine and FontAwesome'
+inputs:
+    tex_path:
+        description: 'The path of the TeX file to compile'
+        required: true
+runs:
+    using: 'docker'
+    image: 'Dockerfile'
+    args:
+        - ${{ inputs.tex_path }}
