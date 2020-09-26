@@ -1,4 +1,4 @@
-FROM vinay0410/tectonic-image:latest
+FROM tommoa/tectonic:latest
 
 RUN apt-get install fonts-font-awesome
 
