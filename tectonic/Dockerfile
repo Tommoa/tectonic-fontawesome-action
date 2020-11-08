@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y libfontconfig1-dev libgraphite2-dev lib
 RUN cargo install tectonic --force --vers 0.3.1
 
 WORKDIR /usr/src/tex
-RUN wget 'https://sourceforge.net/projects/biblatex-biber/files/biblatex-biber/2.11/binaries/Linux/biber-linux_x86_64.tar.gz'
+RUN wget 'https://sourceforge.net/projects/biblatex-biber/files/biblatex-biber/current/binaries/Linux/biber-linux_x86_64.tar.gz'
 RUN tar -xvzf biber-linux_x86_64.tar.gz
 RUN chmod +x biber
 RUN cp biber /usr/bin/biber
@@ -12,11 +12,11 @@ RUN cp biber /usr/bin/biber
 COPY *.tex ./
 COPY *.bib ./
 # first run - keep files for biber
-RUN tectonic --keep-intermediates --reruns 0 main.tex
+RUN tectonic -w https://ttassets.z13.web.core.windows.net/tlextras-2020.0r0.tar --keep-intermediates --reruns 0 main.tex
 # do the biber
 RUN biber main
 # one last tectonic run over all files
-RUN for f in *.tex; do tectonic $f; done
+RUN for f in *.tex; do tectonic -w https://ttassets.z13.web.core.windows.net/tlextras-2020.0r0.tar $f; done
 
 # use a lightweight debian - no need for whole rust environment
 FROM debian:stretch-slim 
